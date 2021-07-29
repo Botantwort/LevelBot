@@ -1,7 +1,13 @@
 module.exports = {
-	name: 'hilfe',
+	name: 'help',
 	description: 'help halt',
 	execute(message, args, client) {
-		message.channel.send("°leaderboard fürs leaderboard; °level für den rank (sonst macht tatsu stress xd). Version 2 des Bots.");
-	},
+		if (!message.member.hasPermission("ADMINISTRATOR")) {
+		message.channel.send("°leaderboard fürs leaderboard; °level für den rank.");
+		};
+		
+		if (message.member.hasPermission("ADMINISTRATOR")) {
+		message.channel.send("°leaderboard fürs leaderboard; °level für den rank und °edit um das Level/ die XP eines Users zu verändern");
+		}
+		}
 };
