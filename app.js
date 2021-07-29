@@ -3,6 +3,7 @@ const Levels = require("discord-xp");
 const client = new Discord.Client();
 const mongoose = require("./database/mongoose");
 const fs = require('fs');
+const keepAlive = require('./server.js');
 require("dotenv").config();
 
 Levels.setURL(`mongodb+srv://Botantwort:${process.env.PASSWORT}@bot.p4gse.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
@@ -27,4 +28,5 @@ for (const file of eventFiles) {
 }
 
 mongoose.init();
+keepAlive();
 client.login(process.env.TOKEN);
