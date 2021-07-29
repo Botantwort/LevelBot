@@ -11,7 +11,7 @@ module.exports = {
             family: 4
         };
 
-        mongoose.connect(`mongodb+srv://discordbot:${process.env.PASSWORT}@bot.p4gse.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, dbOptions);
+        mongoose.connect(`mongodb+srv://Botantwort:${process.env.PASSWORT}@bot.p4gse.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, dbOptions);
         mongoose.set("useFindAndModify", false);
         mongoose.Promise = global.Promise;
 
