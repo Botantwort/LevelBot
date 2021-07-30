@@ -6,7 +6,7 @@ module.exports = {
 		if (message.author.bot) return;
         if (message.channel.type == "dm") return;
 
-        const randomXP = Math.floor(Math.random() * 25) + 15;
+        const randomXP = Math.floor(Math.random() * 25) + 1;
         const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXP);
         if (hasLeveledUp) {
             const user = await Levels.fetch(message.author.id, message.guild.id);
