@@ -16,8 +16,8 @@ module.exports = {
             //message.channel.send(mentionedMember.user.tag + " ist Level " + target.level + " und es fehlen noch " + (Levels.xpFor(target.level + 1) - target.xp) + " XP zum nächsten Level!");
             const img = "https://cdn.discordapp.com/attachments/819909032432107581/870670106328436796/unknown.png";
             const Anzahllevel = target.level
-            const AnzahlXP = target.xp
-            const RequiredXP = Levels.xpFor(target.level + 1)
+            const AnzahlXP = target.xp - Levels.xpFor(target.level)
+            const RequiredXP = Levels.xpFor(target.level + 1) - Levels.xpFor(target.level)
             const rank = new canvacord.Rank()
                 .setAvatar(mentionedMember.user.displayAvatarURL({dynamic : false, format: "png"}))
                 .setBackground("IMAGE", img)
