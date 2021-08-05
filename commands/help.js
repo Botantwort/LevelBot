@@ -3,11 +3,11 @@ module.exports = {
 	description: 'help halt',
 	execute(message, args, client) {
 		if (!message.member.hasPermission("ADMINISTRATOR")) {
-		message.channel.send("°leaderboard fürs leaderboard; °level für den rank.");
+		message.channel.send("°leaderboard fürs leaderboard; °level oder °rank für den rank.");
 		};
 		
 		if (message.member.hasPermission("ADMINISTRATOR")) {
-		message.channel.send("°leaderboard fürs leaderboard; °level für den rank und °edit um das Level/ die XP eines Users zu verändern");
+		message.channel.send("°leaderboard fürs leaderboard; °level oder °rank für den rank und °edit um das Level/ die XP eines Users zu verändern");
 		}
 		}
 };
