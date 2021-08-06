@@ -182,7 +182,8 @@ module.exports = {
                 else await message.member.roles.add(role.id);
                 message.channel.send("Du hast Gottheit erreicht!")
             }
-        }
+        };
+
 
         if (!message.content.startsWith(client.prefix)) return;
 

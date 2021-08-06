@@ -28,7 +28,8 @@ module.exports = {
                 .setStatus(mentionedMember.presence.status)
                 .setProgressBar("#0066ff", "COLOR")
                 .setUsername(`${mentionedMember.user.username}`)
-                .setDiscriminator(`${mentionedMember.user.discriminator}`);
+                .setDiscriminator(`${mentionedMember.user.discriminator}`)
+                .renderEmojis(true)
 
             rank.build()
                 .then(data => {
