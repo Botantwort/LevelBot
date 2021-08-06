@@ -6,6 +6,7 @@ module.exports = {
 	async execute(message, client) {
 		if (message.author.bot) return;
         if (message.channel.type == "dm") return;
+        if (message.channel.id == 741695385042550868, 741699889322262691, 831274181265588244, 741711379156697139, 849013265018519582) return;
 
         const randomXP = Math.floor(Math.random() * 25) + 15;
         const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXP);
