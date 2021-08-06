@@ -191,7 +191,7 @@ module.exports = {
 
         if (!client.commands.has(commandName)) return;
 
-        const command = client.commands.get(commandName) || client.command.find(a => a.aliases && a.aliases.includes(commandName));
+        const command = client.commands.get(commandName);
 
         try {
             command.execute(message, args, client);
