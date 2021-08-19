@@ -9,7 +9,7 @@ module.exports = {
         let mentionedMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!mentionedMember) mentionedMember = message.member;
 
-        const target = await Levels.fetch(mentionedMember.user.id, message.guild.id);
+        const target = await Levels.fetch(mentionedMember.user.id, message.guild.id, true);
         if (!target) return message.channel.send("Diese Person hat noch keinerlei XP auf diesem Server.");
 
         try {
@@ -22,7 +22,7 @@ module.exports = {
                 .setAvatar(mentionedMember.user.displayAvatarURL({dynamic : false, format: "png"}))
                 .setBackground("IMAGE", img)
                 .setLevel(Anzahllevel)
-                .setRank(1, "RANK", false)
+                .setRank(target.position, "RANK", true)
                 .setCurrentXP(AnzahlXP)
                 .setRequiredXP(RequiredXP)
                 .setStatus(mentionedMember.presence.status)
