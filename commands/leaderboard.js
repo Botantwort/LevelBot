@@ -1,6 +1,5 @@
 const Levels = require("discord-xp");
 
-
 module.exports = {
 	name: 'leaderboard',
 	description: 'Zeigt die Top 10 des Servers an',
@@ -12,7 +11,7 @@ module.exports = {
 		if (Nummer > 10) {message.reply("übertreibs nicht, das Maximum ist 10"); return;}
 		else 
 		try {
-			{const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, Nummer); // We grab top XY users with most xp in the current server.
+			{const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, Nummer, true); // We grab top XY users with most xp in the current server.
 		
 			if (rawLeaderboard.length < 1) return message.reply("Keiner ist bisher im  Leaderboard.");
 			
@@ -24,5 +23,6 @@ module.exports = {
 	} catch (err) {
 			console.log(err);
 		}
+		console.log(`${client}`)
 	},
 };
