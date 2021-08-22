@@ -27,6 +27,10 @@ for (const file of eventFiles) {
 	}
 }
 
+client.on('ready', async () => {
+	console.log(`${client.user.tag} has sich in Discord eingelogged.`)
+
+})
 mongoose.init();
 keepAlive();
 client.login(process.env.TOKEN);

@@ -14,7 +14,7 @@ module.exports = {
         if (!target) return message.channel.send("Diese Person hat noch keinerlei XP auf diesem Server.");
 
         try {
-            
+
             axios.get(`https://discord.com/api/users/${mentionedMember.id}`, {
                     headers: {
                         Authorization: `Bot ${client.token}`,
@@ -25,10 +25,24 @@ module.exports = {
                         banner,
                         banner_color
                     } = res.data;
-                    if (banner == null) img = "https://cdn.discordapp.com/attachments/819909032432107581/870670106328436796/unknown.png"
-                    else img =`https://cdn.discordapp.com/banners/${mentionedMember.id}/${banner}.png?size=4096`
-                    if (banner_color == null) Farbe = "#0066ff"
-                    else Farbe = banner_color
+                    Informationen = ""
+                    Informationen2 = ""
+                    if (banner == null) {
+                        img = "https://cdn.discordapp.com/attachments/819909032432107581/870670106328436796/unknown.png";
+                        Informationen = "Zum ändern des Hintergrunds Andreas anschreiben."
+                    } else img = `https://cdn.discordapp.com/banners/${mentionedMember.id}/${banner}.png?size=4096`
+                    if (mentionedMember.id == "475719554689925141") Informationen = ""
+                    if (mentionedMember.id == "484754350179352588") {img = "https://cdn.discordapp.com/attachments/854321680524902420/879004975714418758/IMG_3633.jpg"; Informationen = ""}
+                    if (mentionedMember.id == "731761337046269964") {img = "https://cdn.cloudflare.steamstatic.com/steam/apps/326460/header.jpg?t=1595374372"; Informationen = ""}
+                    if (mentionedMember.id == "536956850747342848") {img = "https://cdn.cloudflare.steamstatic.com/steam/apps/326460/header.jpg?t=1595374372"; Informationen = ""}
+                    if (banner_color == null) {
+                        Farbe = "#0066ff";
+                        Informationen2 = "Zum ändern deiner Trackbarcolor deine Profilfarbe ändern! (Bei Einstellungen > Nutzerprofil)"
+                    } else Farbe = banner_color;
+                    console.log (Farbe)
+                    if (Farbe == "#484B4E") DieAndereFarbe = "#808080"
+                    else DieAndereFarbe = "#484B4E"
+                    console.log (Farbe)
                     const Anzahllevel = target.level
                     const AnzahlXP = target.xp - Levels.xpFor(target.level)
                     const RequiredXP = Levels.xpFor(target.level + 1) - Levels.xpFor(target.level)
@@ -42,15 +56,18 @@ module.exports = {
                         .setRank(target.position, "RANK", true)
                         .setCurrentXP(AnzahlXP)
                         .setRequiredXP(RequiredXP)
-                        .setStatus(mentionedMember.presence.status, true, 5)
+                        .setStatus(mentionedMember.presence.status, false, 5)
                         .setProgressBar(Farbe, "COLOR")
+                        .setProgressBarTrack(DieAndereFarbe)
                         .setUsername(`${mentionedMember.user.username}`)
                         .setDiscriminator(`${mentionedMember.user.discriminator}`)
                         .renderEmojis(true)
                     rank.build()
                         .then(data => {
                             const attachment = new Discord.MessageAttachment(data, "RankCard.png");
-                            message.channel.send(attachment);
+                            message.channel.send(attachment)
+                            if (Informationen !== "") message.channel.send(Informationen)
+                            if (Informationen2 !== "") message.channel.send(Informationen2)
                         })
                 })
         } catch (err) {
