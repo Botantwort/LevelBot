@@ -12,21 +12,23 @@ module.exports = {
 
         const target = await Levels.fetch(mentionedMember.user.id, message.guild.id, true);
         if (!target) return message.channel.send("Diese Person hat noch keinerlei XP auf diesem Server.");
-
+        
         try {
-
             axios.get(`https://discord.com/api/users/${mentionedMember.id}`, {
                     headers: {
                         Authorization: `Bot ${client.token}`,
                     },
                 })
                 .then((res) => {
+                    console.log(res.data)
                     const {
+                        avatar,
                         banner,
                         banner_color
                     } = res.data;
                     Informationen = ""
                     Informationen2 = ""
+                    const Profilbild = `https://cdn.discordapp.com/avatars/${mentionedMember.id}/${avatar}.png?size=256`
                     if (banner == null) {
                         img = "https://cdn.discordapp.com/attachments/819909032432107581/870670106328436796/unknown.png";
                         Informationen = "Zum ändern des Hintergrunds Andreas anschreiben."
@@ -46,10 +48,7 @@ module.exports = {
                     const AnzahlXP = target.xp - Levels.xpFor(target.level)
                     const RequiredXP = Levels.xpFor(target.level + 1) - Levels.xpFor(target.level)
                     const rank = new canvacord.Rank()
-                        .setAvatar(mentionedMember.user.displayAvatarURL({
-                            dynamic: false,
-                            format: "png",
-                        }))
+                        .setAvatar(Profilbild)
                         .setBackground("IMAGE", img)
                         .setLevel(Anzahllevel)
                         .setRank(target.position, "RANK", true)
