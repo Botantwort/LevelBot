@@ -193,11 +193,9 @@ module.exports = {
         }
         if (!message.content.startsWith(client.prefix)) return;
 
-
-
         const args = message.content.slice(client.prefix.length).trim().split(/ +/);
-        const commandName = args.shift().toLowerCase();
-
+        commandName = args.shift().toLowerCase();
+        if (commandName == "rank") {commandName = "level"}
         if (!client.commands.has(commandName)) return;
 
         const command = client.commands.get(commandName);

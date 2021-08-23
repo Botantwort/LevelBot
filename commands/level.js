@@ -35,6 +35,7 @@ module.exports = {
                     if (mentionedMember.id == "484754350179352588") {img = "https://cdn.discordapp.com/attachments/854321680524902420/879004975714418758/IMG_3633.jpg"; Informationen = ""}
                     if (mentionedMember.id == "731761337046269964") {img = "https://cdn.cloudflare.steamstatic.com/steam/apps/326460/header.jpg?t=1595374372"; Informationen = ""}
                     if (mentionedMember.id == "536956850747342848") {img = "https://cdn.cloudflare.steamstatic.com/steam/apps/326460/header.jpg?t=1595374372"; Informationen = ""}
+                    if (mentionedMember.id == "416198708796063744") {img = "https://cdn.discordapp.com/attachments/741695049867460680/879367184684572712/Traurige_Liebe.jpg"; Informationen = ""}
                     if (banner_color == null) {
                         Farbe = "#0066ff";
                         Informationen2 = "Zum ändern deiner Trackbarcolor deine Profilfarbe ändern! (Bei Einstellungen > Nutzerprofil)"
@@ -47,7 +48,7 @@ module.exports = {
                     const rank = new canvacord.Rank()
                         .setAvatar(mentionedMember.user.displayAvatarURL({
                             dynamic: false,
-                            format: "png"
+                            format: "png",
                         }))
                         .setBackground("IMAGE", img)
                         .setLevel(Anzahllevel)
