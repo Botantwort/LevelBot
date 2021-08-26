@@ -2,14 +2,22 @@ const Levels = require("discord-xp")
 const Discord = require("discord.js")
 
 module.exports = {
-	name: 'xp',
-	description: 'zeigt wie viel xp und wie viel noch zum nächsten level',
-	async execute(message, args, client) {
+    name: 'xp',
+    description: 'zeigt wie viel xp und wie viel noch zum nächsten level',
+    async execute(message, args, client) {
         let mentionedMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-        Wer = "Dieser User hat"
-        Wer2 = "hat dieser User: "
-        if (!mentionedMember) {mentionedMember = message.member; Wer = "Du hast"; Wer2 = "hast du: "}
-        if (mentionedMember.user.bot) return message.channel.send("Das ist ein Bot, die bekommen keine XP.")
+
+        if (!mentionedMember) {
+            mentionedMember = message.member;
+            Wer = "Du hast";
+            Wer2 = "hast du: "
+        } else {
+            if (mentionedMember.nickname !== null) Name = mentionedMember.nickname;
+            else Name = mentionedMember.user.username;
+            Wer = Name + " hat";
+            Wer2 = "hat " + mentionedMember.user.username + ": "
+        }
+        if (mentionedMember.user.bot) return message.channel.send(mentionedMember.user.username + " ist ein Bot und Bots bekommen keine XP.")
         const target = await Levels.fetch(mentionedMember.user.id, message.guild.id, true);
         if (!target) return message.channel.send("Diese Person hat noch keinerlei XP auf diesem Server.")
 
