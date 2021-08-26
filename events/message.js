@@ -8,7 +8,8 @@ module.exports = {
     name: 'message',
     async execute(message, client) {
         if (message.author.bot) return;
-        if (message.channel.type == "dm") return;
+        const Zeit = Date.now()
+        if (message.channel.type == "dm") return message.channel.send (`Es sind schon ${Zeit} millisekunden, also circa ${Math.floor(Zeit/60000)} Minuten oder ${Math.floor(Zeit/3600000)} Stunden oder ${Math.floor(Zeit/86400000)} Tage oder ${Math.floor(Zeit/39420000000)} Jahre seit dem 01.01.1970 00:00:00 UTC vergangen... und trotzdem gibt es Leute die denken dass man nen Bot doch DMen soll? Hier haste nen rickroll. <:dogUpset_HundFrustriert:787994935911645204> https://tenor.com/view/dance-moves-dancing-singer-groovy-gif-17029825`);
 
         var stats = {};
         if (fs.existsSync("stats.json")) {
