@@ -33,12 +33,14 @@ module.exports = {
                         Informationen = "Zum ändern des Hintergrunds Andreas anschreiben."
                     } else img = `https://cdn.discordapp.com/banners/${mentionedMember.id}/${banner}.png?size=4096`
                     if (mentionedMember.id == "475719554689925141") Informationen = "" // Ich
-                    if (mentionedMember.id == "484754350179352588") {img = "https://cdn.discordapp.com/attachments/854321680524902420/879004975714418758/IMG_3633.jpg"; Informationen = ""} // Aimer
+                    if (mentionedMember.id == "484754350179352588") {img = "https://cdn.discordapp.com/attachments/854321680524902420/880749160352079872/Screenshot_3_levelbot.png"; Informationen = ""} // Aimer
                     if (mentionedMember.id == "731761337046269964") {img = "https://cdn.cloudflare.steamstatic.com/steam/apps/326460/header.jpg?t=1595374372"; Informationen = ""} // Chicco    
                     if (mentionedMember.id == "536956850747342848") {img = "https://cdn.cloudflare.steamstatic.com/steam/apps/326460/header.jpg?t=1595374372"; Informationen = ""} // auch Chicco
                     if (mentionedMember.id == "416198708796063744") {img = "https://cdn.discordapp.com/attachments/741695049867460680/879367184684572712/Traurige_Liebe.jpg"; Informationen = ""} // Gecki
                     if (mentionedMember.id == "450282638339735552") {img = "https://cdn.discordapp.com/attachments/819909032432107581/879681376578846720/unknown.png"; Informationen = ""} // Tanntus
                     if (mentionedMember.id == "420995855139602442") {img = "https://cdn.discordapp.com/attachments/724231281466015807/879683072382087178/aacabcac791509af6323f387ebd1c2f7.jpg"; Informationen = ""} // Skittles
+                    if (mentionedMember.id == "648803580182134796") {img = "https://cdn.discordapp.com/attachments/781900417956446218/880782801702625330/pokeball.jpg"; Informationen = ""} // Zwergerl
+                    if (mentionedMember.id == "294720427148705792") {img = "https://cdn.discordapp.com/attachments/819909032432107581/880916272181825577/unknown.png"; Informationen = ""} // Skillzz
                     if (banner_color == null) {
                         Farbe = "#0066ff";
                         Informationen2 = "Zum ändern deiner Trackbarcolor deine Profilfarbe ändern! (Bei Einstellungen > Nutzerprofil)"

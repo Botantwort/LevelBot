@@ -53,7 +53,7 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Bronze");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Bronze erreicht!")
+                    message.reply("du hast Bronze erreicht!")
                 }
             }
 
@@ -68,7 +68,7 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Silber");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Silber erreicht!")
+                    message.reply("du hast Silber erreicht!")
                 }
             }
 
@@ -83,7 +83,7 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Gold");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Gold erreicht!")
+                    message.reply("du hast Gold erreicht!")
                 }
             }
 
@@ -98,7 +98,7 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Diamond");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Diamond erreicht!")
+                    message.reply("du hast Diamond erreicht!")
                 }
             }
 
@@ -113,7 +113,7 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Emerald");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Emerald erreicht!")
+                    message.reply("du hast Emerald erreicht!")
                 }
             }
 
@@ -128,7 +128,7 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Rubin");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Rubin erreicht!")
+                    message.reply("du hast Rubin erreicht!")
                 }
             }
 
@@ -143,7 +143,7 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Titan");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Titan erreicht!")
+                    message.reply("du hast Titan erreicht!")
                 }
             }
 
@@ -158,7 +158,7 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Veteran");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Veteran erreicht!")
+                    message.reply("du hast Veteran erreicht!")
                 }
             }
 
@@ -173,7 +173,7 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Halbgott");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Halbgott erreicht!")
+                    message.reply("du hast Halbgott erreicht!")
                 }
             }
 
@@ -188,10 +188,11 @@ module.exports = {
                 role = message.guild.roles.cache.find(role => role.name == "Gottheit");
                 if (!message.member.roles.cache.has(role.id)) {
                     await message.member.roles.add(role.id);
-                    message.channel.send("Du hast Gottheit erreicht!")
+                    message.reply("du hast Gottheit erreicht!")
                 }
             }
         }
+        if (message.content.startsWith("<@!869212452955516978>")) message.reply("ping mich nicht <:dani_ping:880941566351536128>")
         if (!message.content.startsWith(client.prefix)) return;
 
         const args = message.content.slice(client.prefix.length).trim().split(/ +/);
