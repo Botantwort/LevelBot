@@ -7,9 +7,24 @@ const jsonfile = require("jsonfile");
 module.exports = {
     name: 'message',
     async execute(message, client) {
+        let nice = ['69'];
+        let foundInText = false;
+        for (var i in nice) {
+            if (message.content.toLowerCase().includes(nice[i].toLowerCase())) foundInText = true;
+        }
+        let NichtNice = ['https://', '<:', ':smirktus:', "<!@", "<@&", "<#", "<@"]
+        let gefunden = false;
+        for (var i in NichtNice) {
+            if (message.content.toLowerCase().includes(NichtNice[i].toLowerCase())) gefunden = true;
+        }
+        if (!gefunden) {
+            if (foundInText) {
+                message.channel.send("69, nice. <:smirktus:859170348263276545>")
+            }
+        }
         if (message.author.bot) return;
         const Zeit = Date.now()
-        if (message.channel.type == "dm") return message.channel.send (`Es sind schon ${Zeit} millisekunden, also circa ${Math.floor(Zeit/60000)} Minuten oder ${Math.floor(Zeit/3600000)} Stunden oder ${Math.floor(Zeit/86400000)} Tage oder ${Math.floor(Zeit/39420000000)} Jahre seit dem 01.01.1970 00:00:00 UTC vergangen... und trotzdem gibt es Leute die denken dass man nen Bot doch DMen soll? Hier haste nen rickroll. <:dogUpset_HundFrustriert:787994935911645204> https://tenor.com/view/dance-moves-dancing-singer-groovy-gif-17029825`);
+        if (message.channel.type == "dm") return message.channel.send(`Es sind schon ${Zeit} millisekunden, also circa ${Math.floor(Zeit/60000)} Minuten oder ${Math.floor(Zeit/3600000)} Stunden oder ${Math.floor(Zeit/86400000)} Tage oder ${Math.floor(Zeit/39420000000)} Jahre seit dem 01.01.1970 00:00:00 UTC vergangen... und trotzdem gibt es Leute die denken dass man nen Bot doch DMen soll? Hier haste nen rickroll. <:dogUpset_HundFrustriert:787994935911645204> https://tenor.com/view/dance-moves-dancing-singer-groovy-gif-17029825`);
 
         var stats = {};
         if (fs.existsSync("stats.json")) {
@@ -192,12 +207,15 @@ module.exports = {
                 }
             }
         }
-        if (message.content.startsWith("<@!869212452955516978>")) message.reply("ping mich nicht <:dani_ping:880941566351536128>")
+        if (message.content.includes("<@!869212452955516978>")) message.reply("ping mich nicht <:dani_ping:880941566351536128>")
+
         if (!message.content.startsWith(client.prefix)) return;
 
         const args = message.content.slice(client.prefix.length).trim().split(/ +/);
         commandName = args.shift().toLowerCase();
-        if (commandName == "rank") {commandName = "level"}
+        if (commandName == "rank") {
+            commandName = "level"
+        }
         if (!client.commands.has(commandName)) return;
 
         const command = client.commands.get(commandName);
