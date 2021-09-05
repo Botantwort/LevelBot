@@ -52,7 +52,7 @@ module.exports = {
             if (message.channel.id.toLowerCase().includes(botchannel[b].toLowerCase())) Botchannel = true;
         }
         if (!Botchannel) {
-            if (Date.now() - userStats.last_message > 60000) {
+            if (Date.now() - userStats.last_message > 30000) {
                 userStats.last_message = Date.now();
 
 
@@ -223,6 +223,9 @@ module.exports = {
         commandName = args.shift().toLowerCase();
         if (commandName == "rank") {
             commandName = "level"
+        }
+        if (commandName == "lb") {
+            commandName = "leaderboard"
         }
         if (!client.commands.has(commandName)) return;
 

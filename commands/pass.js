@@ -13,7 +13,7 @@ module.exports = {
         }
         if (mentionedMember == message.member) {
             if (!args[1]) return message.channel.send("Witzig <:Donhahaldtrump:720999258290913401>")
-            else return message.channel.send("Versuch es nochmal ohne Selfping")
+            //else return message.channel.send("Versuch es nochmal ohne Selfping")
         }
         const target = await Levels.fetch(mentionedMember.user.id, message.guild.id, true);
         if (!target) return message.channel.send(`${mentionedMember.user.username} hat noch keinerlei XP auf diesem Server.`);
@@ -29,6 +29,8 @@ module.exports = {
             }
         }
         if (Vergleich == mentionedMember) return message.channel.send("Witzig <:Donhahaldtrump:720999258290913401>")
+        if (Vergleich.user.bot) {
+            return message.channel.send("Bots haben keine Xp!")}
         const Ziel = await Levels.fetch(Vergleich.user.id, message.guild.id, true);
         if (!Ziel) return message.channel.send(`${Vergleich.user.username} hat noch keinerlei XP auf diesem Server.`);
         Infomationen = ""
@@ -43,7 +45,7 @@ module.exports = {
         }
         if (target.xp > Ziel.xp) {
             ÜberholXP = ((Math.round((target.xp - Ziel.xp) * 100) / 100).toLocaleString());
-            message.channel.send(`${Vergleich.user.username} braucht ${(Math.round((target.xp - Ziel.xp) * 100) / 100).toLocaleString()} XP um ${Vergleich.user.username} zu überholen. Das sind ~${(Math.round((Math.floor((target.xp - Ziel.xp)/27.5) * 100) / 100).toLocaleString())} Nachrichten. ${Infomationen}`)
+            message.channel.send(`${Vergleich.user.username} braucht ${(Math.round((target.xp - Ziel.xp) * 100) / 100).toLocaleString()} XP um ${mentionedMember.user.username} zu überholen. Das sind ~${(Math.round((Math.floor((target.xp - Ziel.xp)/27.5) * 100) / 100).toLocaleString())} Nachrichten. ${Infomationen}`)
         }
     }
 }
