@@ -10,7 +10,7 @@ const canvas = createCanvas(500, 500)
 const ctx = canvas.getContext('2d')
 
 Levels.setURL(`mongodb+srv://Botantwort:${process.env.PASSWORT}@bot.p4gse.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
-client.prefix = "=";
+client.prefix = "°";
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
