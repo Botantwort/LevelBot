@@ -34,14 +34,14 @@ module.exports = {
         const Ziel = await Levels.fetch(Vergleich.user.id, message.guild.id, true);
         if (!Ziel) return message.channel.send(`${Vergleich.user.username} hat noch keinerlei XP auf diesem Server.`);
         Infomationen = ""
-        if (((Math.floor((Ziel.xp - target.xp) / 27.5) / 60) > 1)) {
-            Infomationen = `Das sind circa ${Math.round((Math.floor((Ziel.xp - target.xp)/27.5)/60), 2)} Stunden wenn ${mentionedMember.user.username} jede Minute etwas schreiben würde.`
+        if (((Math.floor((Ziel.xp - target.xp) / 27.5) / 120) > 1)) {
+            Infomationen = `Das sind circa ${Math.round((Math.floor((Ziel.xp - target.xp)/27.5)/120), 2)} Stunden wenn ${mentionedMember.user.username} alle 30 Sekunden etwas schreiben würde.`
         }
         if (Ziel.xp > target.xp) {
             message.channel.send(`${mentionedMember.user.username} braucht ${(Math.round((Ziel.xp - target.xp) * 100) / 100).toLocaleString()} XP um ${Vergleich.user.username} zu überholen. Das sind ~${(Math.round((Math.floor((Ziel.xp - target.xp)/27.5) * 100) / 100).toLocaleString())} Nachrichten. ${Infomationen}`)
         }
         if (((Math.floor((target.xp - Ziel.xp) / 27.5) / 60) > 1)) {
-            Infomationen = `Das sind circa ${Math.round((Math.floor((target.xp - Ziel.xp)/27.5)/60), 2)} Stunden wenn ${Vergleich.user.username} jede Minute etwas schreiben würde.`
+            Infomationen = `Das sind circa ${Math.round((Math.floor((target.xp - Ziel.xp)/27.5)/120), 2)} Stunden wenn ${Vergleich.user.username} alle 30 Sekunden etwas schreiben würde.`
         }
         if (target.xp > Ziel.xp) {
             ÜberholXP = ((Math.round((target.xp - Ziel.xp) * 100) / 100).toLocaleString());

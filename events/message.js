@@ -7,7 +7,6 @@ const jsonfile = require("jsonfile");
 module.exports = {
     name: 'message',
     async execute(message, client) {
-        if (message.author.id !== "475719554689925141") {return}
         let nice = ['69'];
         let foundInText = false;
         for (var i in nice) {
