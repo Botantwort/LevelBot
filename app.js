@@ -5,12 +5,9 @@ const mongoose = require("./database/mongoose");
 const fs = require('fs');
 const keepAlive = require('./server.js');
 require("dotenv").config();
-const { registerFont, createCanvas } = require('canvas')
-const canvas = createCanvas(500, 500)
-const ctx = canvas.getContext('2d')
 
 Levels.setURL(`mongodb+srv://Botantwort:${process.env.PASSWORT}@bot.p4gse.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
-client.prefix = "=";
+client.prefix = "°";
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -32,8 +29,7 @@ for (const file of eventFiles) {
 
 client.on('ready', async () => {
     console.log(`${client.user.tag} has sich in Discord eingelogged.`)
-	registerFont('./Schriftart/Roboto_Codensed/RobotoCondensed-Bold.ttf', { family: 'Roboto' });
-	ctx.font = '24px "Roboto Condensed"';
+
 });
 
 
