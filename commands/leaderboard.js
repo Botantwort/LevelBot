@@ -12,14 +12,14 @@ module.exports = {
 		else 
 		try {
 			{const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, Nummer, true); // We grab top XY users with most xp in the current server.
-		
+
 			if (rawLeaderboard.length < 1) return message.reply("Keiner ist bisher im  Leaderboard.");
 			
 			const leaderboard = await Levels.computeLeaderboard(client, rawLeaderboard, true); // We process the leaderboard.
 			
 			const lb = leaderboard.map(e => `${e.position}. ${e.username}  Level: ${e.level}  XP: ${e.xp.toLocaleString()}`); // We map the outputs.
 			
-			message.channel.send(`**Die Top ${Nummer}:**\n\n${lb.join("\n\n")}`);}
+			message.channel.send(`**Die Top ${Math.floor(Nummer)}:**\n\n${lb.join("\n\n")}`);}
 	} catch (err) {
 			console.log(err);
 		}
