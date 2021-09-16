@@ -1,4 +1,8 @@
 const Levels = require("discord-xp");
+const fs = require("fs");
+const jsonfile = require("jsonfile");
+var stats = {};
+
 
 module.exports = {
     name: 'edit',
@@ -6,8 +10,18 @@ module.exports = {
     async execute(message, args, client) {
         let usage = "°edit @member [xp,level] [add, set, remove] <nummer>";
         const mentionedMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-        
-        if(!message.member.hasPermission("ADMINISTRATOR")) {message.reply ("Du hast nicht ausreichend Rechte dafür!"); return};
+        if (fs.existsSync("stats.json")) {
+        stats = jsonfile.readFileSync("stats.json");
+        }
+
+        const guildStats = stats[message.guild.id];
+
+        const userStats = guildStats[mentionedMember.id]
+
+        if (!message.member.hasPermission("ADMINISTRATOR")) {
+            message.reply("Du hast nicht ausreichend Rechte dafür!");
+            return
+        };
         if (!args[0]) return message.channel.send("Du hast zu wenig Argumente angegeben: " + usage);
         if (!mentionedMember) return message.channel.send("Dieser User scheint nicht aufn Server zu sein oder ist noch nicht in meiner Database, der User muss in dem Fall etwas schreiben und dann versuch es erneut.");
         if (!args[1]) return message.channel.send("Du musst mir sagen ob du die XP oder das Level von diesem User verändern willst: " + usage);
@@ -22,6 +36,7 @@ module.exports = {
                 try {
                     await Levels.appendXp(mentionedMember.user.id, message.guild.id, value)
                     message.channel.send("Erfolgreich " + value + " XP dem User " + mentionedMember.user.tag + " hinzugefügt!")
+                    if (userStats.debug == true) mentionedMember.send(`${message.member.user.username} hat dir ${value} XP hinzugefügt.`)
                 } catch (err) {
                     console.log(err);
                 }
@@ -30,6 +45,7 @@ module.exports = {
                 try {
                     await Levels.appendXp(mentionedMember.user.id, message.guild.id, -value)
                     message.channel.send("Erfolgreich " + value + " XP dem User " + mentionedMember.user.tag + " weggenommen!")
+                    if (userStats.debug == true) mentionedMember.send(`${message.member.user.username} hat dir ${value} XP weggenommen.`)
                 } catch (err) {
                     console.log(err);
                 }
@@ -38,6 +54,7 @@ module.exports = {
                 try {
                     await Levels.setXp(mentionedMember.user.id, message.guild.id, value)
                     message.channel.send("Der User " + mentionedMember.user.tag + " hat jetzt genau " + value + " XP!")
+                    if (userStats.debug == true) mentionedMember.send(`${message.member.user.username} hat deine XP auf ${value} XP eingestellt.`)
                 } catch (err) {
                     console.log(err);
                 }
@@ -52,6 +69,7 @@ module.exports = {
                 try {
                     await Levels.appendLevel(mentionedMember.user.id, message.guild.id, value)
                     message.channel.send("Erfolgreich " + value + " Level dem User " + mentionedMember.user.tag + " hinzugefügt!")
+                    if (userStats.debug == true) mentionedMember.send(`${message.member.user.username} hat dir ${value} Level hinzugefügt.`)
                 } catch (err) {
                     console.log(err);
                 }
@@ -60,6 +78,7 @@ module.exports = {
                 try {
                     await Levels.appendLevel(mentionedMember.user.id, message.guild.id, -value)
                     message.channel.send("Erfolgreich " + value + " Level dem User " + mentionedMember.user.tag + " weggenommen!")
+                    if (userStats.debug == true) mentionedMember.send(`${message.member.user.username} hat dir ${value} Level weggenommen.`)
                 } catch (err) {
                     console.log(err);
                 }
@@ -68,6 +87,7 @@ module.exports = {
                 try {
                     await Levels.setLevel(mentionedMember.user.id, message.guild.id, value)
                     message.channel.send("Der User " + mentionedMember.user.tag + " ist jetzt genau Level " + value + "!")
+                    if (userStats.debug == true) mentionedMember.send(`${message.member.user.username} hat dein Level auf Level ${value} eingestellt.`)
                 } catch (err) {
                     console.log(err);
                 }
