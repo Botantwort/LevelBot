@@ -39,7 +39,8 @@ module.exports = {
         const guildStats = stats[message.guild.id];
         if (message.author.id in guildStats === false) {
             guildStats[message.author.id] = {
-                last_message: 0
+                last_message: 0,
+                debug: false
             };
         }
 
@@ -51,165 +52,171 @@ module.exports = {
             if (message.channel.id.toLowerCase().includes(botchannel[b].toLowerCase())) Botchannel = true;
         }
         if (!Botchannel) {
-            if (Date.now() - userStats.last_message > 30000) {
-                userStats.last_message = Date.now();
+            if (!message.content.startsWith(client.prefix)) {
+                if (Date.now() - userStats.last_message > 30000) {
+                    userStats.last_message = Date.now();
 
 
-                jsonfile.writeFileSync("stats.json", stats);
-                const randomXP = Math.floor(Math.random() * 25) + 15;
-                const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXP);
-                const user = await Levels.fetch(message.author.id, message.guild.id);
-                if (hasLeveledUp) {
+                    jsonfile.writeFileSync("stats.json", stats);
+                    const randomXP = Math.floor(Math.random() * 25) + 15;
+                    if (userStats.debug == true) {
+                        message.author.send(`Du bekamst ${randomXP} XP für die Nachricht`)
+                    }
+
+                    const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXP);
                     const user = await Levels.fetch(message.author.id, message.guild.id);
-                    message.channel.send(`${message.member}, du hast Level ${user.level} erreicht! Weiter so!`)
-                }
-                if (user.xp >= 1150) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Bronze");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Bronze",
-                            color: "#8C4931"
-                        }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Bronze");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Bronze erreicht!")
+                    if (hasLeveledUp) {
+                        const user = await Levels.fetch(message.author.id, message.guild.id);
+                        message.channel.send(`${message.member}, du hast Level ${user.level} erreicht! Weiter so!`)
                     }
-                }
-
-                if (user.xp >= 4675) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Silber");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Silber",
-                            color: "#3A747B"
+                    if (user.xp >= 1150) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Bronze");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Bronze",
+                                color: "#8C4931"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Bronze");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Bronze erreicht!")
                         }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Silber");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Silber erreicht!")
                     }
-                }
 
-                if (user.xp >= 23850) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Gold");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Gold",
-                            color: "#A98038"
+                    if (user.xp >= 4675) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Silber");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Silber",
+                                color: "#3A747B"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Silber");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Silber erreicht!")
                         }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Gold");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Gold erreicht!")
                     }
-                }
 
-                if (user.xp >= 67525) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Diamond");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Diamond",
-                            color: "#01BADB"
+                    if (user.xp >= 23850) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Gold");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Gold",
+                                color: "#A98038"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Gold");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Gold erreicht!")
                         }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Diamond");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Diamond erreicht!")
                     }
-                }
 
-                if (user.xp >= 145700) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Emerald");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Emerald",
-                            color: "#19F203"
+                    if (user.xp >= 67525) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Diamond");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Diamond",
+                                color: "#01BADB"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Diamond");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Diamond erreicht!")
                         }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Emerald");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Emerald erreicht!")
                     }
-                }
 
-                if (user.xp >= 268375) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Rubin");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Rubin",
-                            color: "#D63E53"
+                    if (user.xp >= 145700) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Emerald");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Emerald",
+                                color: "#19F203"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Emerald");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Emerald erreicht!")
                         }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Rubin");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Rubin erreicht!")
                     }
-                }
 
-                if (user.xp >= 445550) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Titan");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Titan",
-                            color: "#651AC0"
+                    if (user.xp >= 268375) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Rubin");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Rubin",
+                                color: "#D63E53"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Rubin");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Rubin erreicht!")
                         }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Titan");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Titan erreicht!")
                     }
-                }
 
-                if (user.xp >= 687225) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Veteran");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Veteran",
-                            color: "#AA0926"
+                    if (user.xp >= 445550) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Titan");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Titan",
+                                color: "#651AC0"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Titan");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Titan erreicht!")
                         }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Veteran");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Veteran erreicht!")
                     }
-                }
 
-                if (user.xp >= 1192550) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Halbgott");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Halbgott",
-                            color: "#7B970E"
+                    if (user.xp >= 687225) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Veteran");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Veteran",
+                                color: "#AA0926"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Veteran");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Veteran erreicht!")
                         }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Halbgott");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Halbgott erreicht!")
                     }
-                }
 
-                if (user.xp >= 1899250) {
-                    let role = message.guild.roles.cache.find(role => role.name == "Gottheit");
-                    if (!role) await message.guild.roles.create({
-                        data: {
-                            name: "Gottheit",
-                            color: "#B0EDF1"
+                    if (user.xp >= 1192550) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Halbgott");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Halbgott",
+                                color: "#7B970E"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Halbgott");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Halbgott erreicht!")
                         }
-                    }).catch(err => console.log(err));
-                    role = message.guild.roles.cache.find(role => role.name == "Gottheit");
-                    if (!message.member.roles.cache.has(role.id)) {
-                        await message.member.roles.add(role.id);
-                        message.reply("du hast Gottheit erreicht!")
+                    }
+
+                    if (user.xp >= 1899250) {
+                        let role = message.guild.roles.cache.find(role => role.name == "Gottheit");
+                        if (!role) await message.guild.roles.create({
+                            data: {
+                                name: "Gottheit",
+                                color: "#B0EDF1"
+                            }
+                        }).catch(err => console.log(err));
+                        role = message.guild.roles.cache.find(role => role.name == "Gottheit");
+                        if (!message.member.roles.cache.has(role.id)) {
+                            await message.member.roles.add(role.id);
+                            message.reply("du hast Gottheit erreicht!")
+                        }
                     }
                 }
             }

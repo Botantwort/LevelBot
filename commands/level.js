@@ -68,6 +68,10 @@ module.exports = {
                         img = "https://cdn.discordapp.com/attachments/819909032432107581/880916272181825577/unknown.png";
                         Informationen = ""
                     } // Skillzz
+                    if (mentionedMember.id == "494848677547081738") {
+                        img = "https://cdn.discordapp.com/attachments/876435783119142943/888018064732463175/unknown-361.jpg";
+                        Informationen = ""
+                    } // Buschi
                     if (banner_color == null) {
                         Farbe = "#0066ff";
                         Informationen2 = "Zum ändern deiner Trackbarcolor deine Profilfarbe ändern! (Bei Einstellungen > Nutzerprofil)"
