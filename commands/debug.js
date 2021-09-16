@@ -31,9 +31,9 @@ module.exports = {
 
         const userStats = guildStats[message.author.id];
         if (!mentionedMember) {
-            if (userStats.debug == dm) {userStats.debug = true}
+            if (userStats.debug == "dm") {userStats.debug = true}
             if (args[0] == "dm") {
-                userStats.debug = dm
+                userStats.debug = "dm"
                 jsonfile.writeFileSync("stats.json", stats);
                 message.channel.send("Debugging wurde auf `dm` gesetzt. Zum ändern erneut `°debug` nutzen")
                 role = message.guild.roles.cache.find(role => role.name == "Debug");

@@ -63,8 +63,12 @@ module.exports = {
                         const Debugchannel = await client.channels.fetch("888040968610250782");
                         Debugchannel.send(`${message.author.username} bekam ${randomXP} XP für die Nachricht`);
                     }
-                    if (userStats.debug == dm) {
+                    if (userStats.debug == "dm") {
                         message.author.send(`Du bekamst ${randomXP} XP für die Nachricht`)
+                    }
+                    if(!userStats.debug) {
+                        userStats.debug = false
+                        jsonfile.writeFileSync("stats.json", stats);
                     }
 
                     const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXP);
