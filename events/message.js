@@ -46,7 +46,7 @@ module.exports = {
 
         const userStats = guildStats[message.author.id];
 
-        let botchannel = ['741720422285836441', "741695385042550868", "741699889322262691"];
+        let botchannel = ['741720422285836441', "741695385042550868", "741699889322262691", "888040968610250782"];
         let Botchannel = false;
         for (var b in botchannel) {
             if (message.channel.id.toLowerCase().includes(botchannel[b].toLowerCase())) Botchannel = true;
@@ -60,6 +60,10 @@ module.exports = {
                     jsonfile.writeFileSync("stats.json", stats);
                     const randomXP = Math.floor(Math.random() * 25) + 15;
                     if (userStats.debug == true) {
+                        const Debugchannel = await client.channels.fetch("888040968610250782");
+                        Debugchannel.send(`${message.author.username} bekam ${randomXP} XP für die Nachricht`);
+                    }
+                    if (userStats.debug == dm) {
                         message.author.send(`Du bekamst ${randomXP} XP für die Nachricht`)
                     }
 
