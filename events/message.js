@@ -46,6 +46,23 @@ module.exports = {
 
         const userStats = guildStats[message.author.id];
 
+        var settings = {};
+        if (fs.existsSync("settings.json")) {
+            settings = jsonfile.readFileSync("settings.json");
+        }
+
+        if (message.author.id in settings === false) {
+            settings[message.author.id] = {
+                Hintergrund: null,
+                name: `${message.author.username}#${message.author.discriminator}`
+            };
+        } 
+        const Einstellungen = settings[message.author.id]
+        if (Einstellungen.name !== `${message.author.username}#${message.author.discriminator}`) {
+            Einstellungen.name = `${message.author.username}#${message.author.discriminator}`
+            jsonfile.writeFileSync("settings.json", settings)
+        }
+
         let botchannel = ['741720422285836441', "741695385042550868", "741699889322262691", "888040968610250782"];
         let Botchannel = false;
         for (var b in botchannel) {
@@ -60,13 +77,22 @@ module.exports = {
                     jsonfile.writeFileSync("stats.json", stats);
                     const randomXP = Math.floor(Math.random() * 25) + 15;
                     if (userStats.debug == true) {
-                        const Debugchannel = await client.channels.fetch("888040968610250782");
-                        Debugchannel.send(`${message.author.username} bekam ${randomXP} XP für die Nachricht`);
+                        if (message.guild.id == "741694739279118446") Debugchannel = await client.channels.fetch("888040968610250782")
+                        else Debugchannel = await client.channels.fetch("746716303267594290")
+                        if (message.content.length < 100) {Inhalt = `${message.content}`; Punkte = ""}
+                        else {
+                            var string = `${message.content}`;
+                            var length = 100;
+                            var trimmedString = string.substring(0, length);
+                            Inhalt = `${trimmedString}`
+                            Punkte = "..."
+                        }
+                        Debugchannel.send(`${message.author.username} bekam ${randomXP} XP für die Nachricht: ` + "`" + Inhalt + "`"+ Punkte);
                     }
                     if (userStats.debug == "dm") {
                         message.author.send(`Du bekamst ${randomXP} XP für die Nachricht`)
                     }
-                    if(!userStats.debug) {
+                    if (!userStats.debug) {
                         userStats.debug = false
                         jsonfile.writeFileSync("stats.json", stats);
                     }
