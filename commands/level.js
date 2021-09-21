@@ -13,15 +13,23 @@ module.exports = {
         if (fs.existsSync("settings.json")) {
             settings = jsonfile.readFileSync("settings.json");
         }
+
         let mentionedMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!mentionedMember) mentionedMember = message.member;
         if (mentionedMember.user.bot) {
             mentionedMember.user.id = "869212452955516978"
-        }
+        }        
+        if (mentionedMember.id in settings === false) {
+            settings[mentionedMember.id] = {
+                Hintergrund: null,
+                name: `${mentionedMember.user.username}#${mentionedMember.user.discriminator}`
+            };
+        } 
+        jsonfile.writeFileSync("settings.json", settings)
+        const Hintergrund = settings[mentionedMember.id]
         const target = await Levels.fetch(mentionedMember.user.id, message.guild.id, true);
         if (!target) return message.channel.send("Diese Person hat noch keinerlei XP auf diesem Server.");
         message.channel.send('Rankcard lädt...').then((resultMessage) => {
-                const Hintergrund = settings[mentionedMember.id]
                 try {
                     axios.get(`https://discord.com/api/users/${mentionedMember.id}`, {
                             headers: {

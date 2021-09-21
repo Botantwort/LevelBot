@@ -50,13 +50,14 @@ module.exports = {
         if (fs.existsSync("settings.json")) {
             settings = jsonfile.readFileSync("settings.json");
         }
-
-        if (message.author.id in settings === false) {
+        console.log(message.author.id in settings)
+        if (message.author.id in settings == false) {
             settings[message.author.id] = {
                 Hintergrund: null,
                 name: `${message.author.username}#${message.author.discriminator}`
             };
         } 
+        jsonfile.writeFileSync("settings.json", settings)
         const Einstellungen = settings[message.author.id]
         if (Einstellungen.name !== `${message.author.username}#${message.author.discriminator}`) {
             Einstellungen.name = `${message.author.username}#${message.author.discriminator}`
