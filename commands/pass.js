@@ -30,18 +30,41 @@ module.exports = {
         }
         if (Vergleich == mentionedMember) return message.channel.send("Witzig <:Donhahaldtrump:720999258290913401>")
         if (Vergleich.user.bot) {
-            return message.channel.send("Bots haben keine Xp!")}
+            return message.channel.send("Bots haben keine Xp!")
+        }
         const Ziel = await Levels.fetch(Vergleich.user.id, message.guild.id, true);
         if (!Ziel) return message.channel.send(`${Vergleich.user.username} hat noch keinerlei XP auf diesem Server.`);
         Infomationen = ""
         if (((Math.floor((Ziel.xp - target.xp) / 27.5) / 120) > 1)) {
-            Infomationen = `Das sind circa ${Math.round((Math.floor((Ziel.xp - target.xp)/27.5)/120), 2)} Stunden wenn ${mentionedMember.user.username} alle 30 Sekunden etwas schreiben würde.`
+            var string = `${(Math.floor((Ziel.xp - target.xp) / 27.5) / 120)}`;
+            var length = 3;
+            var Stunden = string.substring(0, length);
+            if (Stunden.endsWith(".")) {
+                length = 4;
+                Stunden = string.substring(0, length)
+            }
+            if (Stunden.endsWith(".0")) {
+                length = 2;
+                Stunden = string.substring(0, length)
+            }
+            Infomationen = `Das sind circa ${Stunden} Stunden wenn ${mentionedMember.user.username} alle 30 Sekunden etwas schreiben würde.`
         }
         if (Ziel.xp > target.xp) {
             message.channel.send(`${mentionedMember.user.username} braucht ${(Math.round((Ziel.xp - target.xp) * 100) / 100).toLocaleString()} XP um ${Vergleich.user.username} zu überholen. Das sind ~${(Math.round((Math.floor((Ziel.xp - target.xp)/27.5) * 100) / 100).toLocaleString())} Nachrichten. ${Infomationen}`)
         }
-        if (((Math.floor((target.xp - Ziel.xp) / 27.5) / 60) > 1)) {
-            Infomationen = `Das sind circa ${Math.round((Math.floor((target.xp - Ziel.xp)/27.5)/120), 2)} Stunden wenn ${Vergleich.user.username} alle 30 Sekunden etwas schreiben würde.`
+        if (((Math.floor((target.xp - Ziel.xp) / 27.5) / 120) > 1)) {
+            var string = `${(Math.floor((target.xp - Ziel.xp) / 27.5) / 120)}`;
+            var length = 3;
+            var Stunden = string.substring(0, length)
+            if (Stunden.endsWith(".")) {
+                length = 4;
+                Stunden = string.substring(0, length)
+            }
+            if (Stunden.endsWith(".0")) {
+                length = 2;
+                Stunden = string.substring(0, length)
+            }
+            Infomationen = `Das sind circa ${Stunden} Stunden wenn ${Vergleich.user.username} alle 30 Sekunden etwas schreiben würde.`
         }
         if (target.xp > Ziel.xp) {
             ÜberholXP = ((Math.round((target.xp - Ziel.xp) * 100) / 100).toLocaleString());
