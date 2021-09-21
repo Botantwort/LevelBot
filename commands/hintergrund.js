@@ -11,23 +11,24 @@ module.exports = {
         }
         const Hintergrund = settings[message.author.id]
         const Anhang = (message.attachments)
-        console
         if (!args[0]) {
             if (!message.attachments.size) {
                 message.channel.send("Bitte häng deinen Hintergrund an den Command an oder nutz `" + client.prefix + "hintergrund delete` um deinen Hintergrund zu löschen")
                 return
             }
-            if (message.attachments.size == 1) {
-                var URL = Anhang.array()[0].url
-                if (URL.endsWith(".gif")) {
-                    message.channel.send("Bitte kein GIF, das funktioniert (noch) nicht");
+        }
+        if (message.attachments.size == 1) {
+            var URL = Anhang.array()[0].url
+            if (!URL.endsWith(".png")) {
+                if (!URL.endsWith(".jpg")) {
+                    message.channel.send("Bitte nutz ein PNG oder JPG, der Rest funktioniert nicht.");
                     return
                 }
-                Hintergrund.Hintergrund = URL
-                jsonfile.writeFileSync("settings.json", settings)
-                message.channel.send("Erfolgreich als Hintergrund gesetzt.")
-                return
             }
+            Hintergrund.Hintergrund = URL
+            jsonfile.writeFileSync("settings.json", settings)
+            message.channel.send("Erfolgreich als Hintergrund gesetzt.")
+            return
         }
         if (args[0] == "default") {
             if (Hintergrund.Hintergrund !== "default") {
