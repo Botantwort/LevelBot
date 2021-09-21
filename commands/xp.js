@@ -43,7 +43,7 @@ module.exports = {
         }
         
         if (XpAnzahl > 1899250) return message.channel.send(`${Wer} schon die maximale Xprole erreicht mit ${formatXp(n)} XP!`) 
-        if (XpRoleName !== "") message.channel.send(`${Wer} gerade ${formatXp(n)} XP und es fehlen noch ${formatNeededXp(m)} ${XpRoleName}.`)
+        if (XpRoleName !== "") message.channel.send(`${Wer} gerade ${formatXp(n)} XP und es fehlen noch ${formatNeededXp(m)} ${XpRoleName}. Das sind ungefähr ${(Math.round((XpRole/27.5) * 100) / 100).toLocaleString()} Nachrichten.`)
         if (XpRoleName == "") message.channel.send("Irgendetwas ist schiefgelaufen. So viele XP " + Wer2 + formatXp(n))
     }
 }
