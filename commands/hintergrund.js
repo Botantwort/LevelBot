@@ -1,10 +1,11 @@
 const fs = require("fs");
 const jsonfile = require("jsonfile");
+const image = require('images-scraper')
 
 module.exports = {
     name: 'hintergrund',
     description: 'Setzte den Hintergrund bei der Rankcard',
-    execute(message, args, client) {
+    async execute(message, args, client) {
         var settings = {};
         if (fs.existsSync("settings.json")) {
             settings = jsonfile.readFileSync("settings.json");
@@ -89,8 +90,26 @@ module.exports = {
                 return
             }
         } else {
-            message.channel.send("Bitte häng deinen Hintergrund an den Command an oder nutz `" + client.prefix + "hintergrund delete` um deinen Hintergrund zu löschen")
+            const google = new image({
+                puppeteer: {
+                    headless: true,
+                }
+            })
+            const query = args.join(" ")
+            message.channel.send('<a:loading:877227676035846204> Das dauert jetzt ein bisschen...').then(async (resultMessage) => {
+                const results = await google.scrape(query, 1)
+                BildURL = (results[0].url)
+                if (Hintergrund.last !== Hintergrund.Hintergrund) {
+                    Hintergrund.last = Hintergrund.Hintergrund
+                    jsonfile.writeFileSync("settings.json", settings)
+
+                }
+                Hintergrund.Hintergrund = BildURL
+                jsonfile.writeFileSync("settings.json", settings)
+                resultMessage.edit(`Erfolgreich dieses Bild: ${BildURL} als Hintergrund gesetzt.`)
+            })
             return
+
         }
     }
 }
