@@ -25,6 +25,10 @@ module.exports = {
                     return
                 }
             }
+            if (Hintergrund.last !== Hintergrund.Hintergrund) {
+                Hintergrund.last = Hintergrund.Hintergrund
+                jsonfile.writeFileSync("settings.json", settings)
+            }
             Hintergrund.Hintergrund = URL
             jsonfile.writeFileSync("settings.json", settings)
             message.channel.send("Erfolgreich als Hintergrund gesetzt.")
@@ -32,6 +36,10 @@ module.exports = {
         }
         if (args[0] == "default") {
             if (Hintergrund.Hintergrund !== "default") {
+                if (Hintergrund.last !== Hintergrund.Hintergrund) {
+                    Hintergrund.last = Hintergrund.Hintergrund
+                    jsonfile.writeFileSync("settings.json", settings)
+                }
                 Hintergrund.Hintergrund = "default"
                 jsonfile.writeFileSync("settings.json", settings)
                 message.channel.send("Erfolgreich deinen Hintergrund auf default gesetzt.")
@@ -41,8 +49,37 @@ module.exports = {
                 return
             }
         }
+        if (args[0] == "last") {
+            if (Hintergrund.last == Hintergrund.Hintergrund) {
+                message.channel.send("Dein zuletzt genutzter Hintergrund ist derselbe wie dein jetziger.")
+            }
+            if (Hintergrund.last == null) {
+                message.channel.send("Du hast zur Zeit keinen Hintergrund den du zuletzt genutzt hast")
+                return
+            }
+            if (Hintergrund.last == "default") {
+                Dummy = Hintergrund.Hintergrund
+                Hintergrund.Hintergrund = "default"
+                jsonfile.writeFileSync("settings.json", settings)
+                Hintergrund.last = Dummy
+                jsonfile.writeFileSync("settings.json", settings)
+                message.channel.send("Erfolgreich deinen Hintergrund auf default gesetzt.")
+                return
+            }
+            Dummy = Hintergrund.Hintergrund
+            Hintergrund.Hintergrund = Hintergrund.last
+            jsonfile.writeFileSync("settings.json", settings)
+            Hintergrund.last = Dummy
+            jsonfile.writeFileSync("settings.json", settings)
+            message.channel.send("Erfolgreich als Hintergrund zu dem vorherigen zurück geändert.")
+            return
+        }
         if (args[0] == "delete") {
             if (Hintergrund.Hintergrund !== null) {
+                if (Hintergrund.last !== Hintergrund.Hintergrund) {
+                    Hintergrund.last = Hintergrund.Hintergrund
+                    jsonfile.writeFileSync("settings.json", settings)
+                }
                 Hintergrund.Hintergrund = null
                 jsonfile.writeFileSync("settings.json", settings)
                 message.channel.send("Erfolgreich deinen Hintergrund gelöscht")
