@@ -12,6 +12,8 @@ module.exports = {
         }
         const Hintergrund = settings[message.author.id]
         const Anhang = (message.attachments)
+        let mentionedMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+
         if (!args[0]) {
             if (!message.attachments.size) {
                 message.channel.send("Bitte häng deinen Hintergrund an den Command an oder nutz `" + client.prefix + "hintergrund delete` um deinen Hintergrund zu löschen")
@@ -75,6 +77,54 @@ module.exports = {
             message.channel.send("Erfolgreich als Hintergrund zu dem vorherigen zurück geändert.")
             return
         }
+        if (mentionedMember) {
+            if (mentionedMember.user.bot) {
+                return message.channel.send("Dies ist ein bot.")
+            }
+            const mentionedHintergrund = settings[mentionedMember.id]
+            if (mentionedMember.id in settings === false) {
+                settings[mentionedMember.id] = {
+                    Hintergrund: null,
+                    name: `${mentionedMember.user.username}#${mentionedMember.discriminator}`
+                };
+                jsonfile.writeFileSync("settings.json", settings)
+            }
+            if (!args[1]) {
+                message.channel.send(`Das ist der Hintergrund von ${mentionedMember.user.username}: ${mentionedHintergrund.Hintergrund}`)
+                return
+            }
+            if (args[1] == "steal") {
+                if (mentionedMember == message.member) {
+                    message.channel.send("Du kannst dich nicht selber bestehlen, so funktioniert das nicht.")
+                    return
+                }
+                if (mentionedHintergrund == null || "default") {
+                    message.channel.send(`Von ${mentionedMember.user.username} gibt es nichts zu stehlen, diese Person hat keinen eigenen Hintergrund`)
+                    return
+                } else {
+                    if (Hintergrund.last !== Hintergrund.Hintergrund) {
+                        Hintergrund.last = Hintergrund.Hintergrund
+                        jsonfile.writeFileSync("settings.json", settings)
+                    }
+                    Hintergrund.Hintergrund = mentionedHintergrund.Hintergrund
+                    jsonfile.writeFileSync("settings.json", settings)
+                }
+            }
+            if (args [1] == "reset") {
+                if (!message.member.hasPermission("ADMINISTRATOR")) {
+                    return message.channel.send("Dazu hast du keine Rechte!")
+                } else {
+                    if (Hintergrund.last == Hintergrund.Hintergrund) {
+                        Hintergrund.last = "default"
+                        jsonfile.writeFileSync("settings.json", settings)
+                    }
+                    Hintergrund.Hintergrund = "default"
+                    jsonfile.writeFileSync("settings.json", settings)
+                    message.channel.send(`Der Hintergrund von ${mentionedMember.user.username} wurde erfolgrich resettet.`)
+                }
+            }
+
+        }
         if (args[0] == "delete") {
             if (Hintergrund.Hintergrund !== null) {
                 if (Hintergrund.last !== Hintergrund.Hintergrund) {
@@ -90,24 +140,29 @@ module.exports = {
                 return
             }
         } else {
+            message.channel.send('<a:loading:877227676035846204> Das dauert jetzt ein bisschen...')
+                .then(msg => {
+                    msg.delete({
+                        timeout: 7000
+                    });
+                })
+            const query = args.join(" ")
             const google = new image({
                 puppeteer: {
                     headless: true,
                 }
             })
-            const query = args.join(" ")
-            message.channel.send('<a:loading:877227676035846204> Das dauert jetzt ein bisschen...').then(async (resultMessage) => {
-                const results = await google.scrape(query, 1)
-                BildURL = (results[0].url)
-                if (Hintergrund.last !== Hintergrund.Hintergrund) {
-                    Hintergrund.last = Hintergrund.Hintergrund
-                    jsonfile.writeFileSync("settings.json", settings)
-
-                }
-                Hintergrund.Hintergrund = BildURL
+            const results = await google.scrape(query, 1)
+            BildURL = (results[0].url)
+            if (Hintergrund.last !== Hintergrund.Hintergrund) {
+                Hintergrund.last = Hintergrund.Hintergrund
                 jsonfile.writeFileSync("settings.json", settings)
-                resultMessage.edit(`Erfolgreich dieses Bild: ${BildURL} als Hintergrund gesetzt.`)
-            })
+
+            }
+            Hintergrund.Hintergrund = BildURL
+            jsonfile.writeFileSync("settings.json", settings)
+            message.channel.send(`Erfolgreich dieses Bild: ${BildURL} als Hintergrund gesetzt.`)
+
             return
 
         }
