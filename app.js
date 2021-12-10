@@ -6,6 +6,7 @@ const fs = require('fs');
 const keepAlive = require('./server.js');
 require("dotenv").config();
 
+
 Levels.setURL(`mongodb+srv://Botantwort:${process.env.PASSWORT}@bot.p4gse.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
 client.prefix = "°";
 client.commands = new Discord.Collection();
