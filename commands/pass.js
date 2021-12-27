@@ -5,19 +5,41 @@ module.exports = {
     description: 'Wie viel xp und nachrichten um jemanden zu überholen',
     async execute(message, args, client) {
         let mentionedMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-        if (!mentionedMember) {
-            return message.channel.send("Du musst eine Person erwähnen (oder die ID angeben) damit der Command funktioniert")
-        }
+      if (!mentionedMember) {   
+          mentionedMember = message.member
+      }
         if (mentionedMember.user.bot) {
             return message.channel.send("Bots haben keine Xp!")
         }
-        if (mentionedMember == message.member) {
-            if (!args[1]) return message.channel.send("Witzig <:Donhahaldtrump:720999258290913401>")
-            //else return message.channel.send("Versuch es nochmal ohne Selfping")
-        }
-        const target = await Levels.fetch(mentionedMember.user.id, message.guild.id, true);
+      const target = await Levels.fetch(mentionedMember.user.id, message.guild.id, true);
         if (!target) return message.channel.send(`${mentionedMember.user.username} hat noch keinerlei XP auf diesem Server.`);
         Vergleich = message.member
+        if (mentionedMember == message.member) {
+            if (!args[1]) {
+              const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, -1, true);
+      				const leaderboard = await Levels.computeLeaderboard(client, rawLeaderboard, true);
+              const lb = leaderboard.map(e => `${e.position};${e.userID}`);
+              let Platzierung = target.position - 1
+              var outputline = '';
+              for (let i=0;i<lb.length;i++) {
+              var line = lb[i];
+              if (line.startsWith(Platzierung+';')) { //Das ; nach dem slicePunkt verhindert, dass er zum Beispiel bei '1' auch '10', '11', ... findet 
+                outputline = line
+              }
+              }
+              if (outputline=='') {
+               message.channel.send("Es konnte keine Person gefunden werden die vor dir ist.")
+               return
+              }
+              else {
+                const Platzierungsding = Platzierung.toString().length + 1
+                var DieID = outputline.substring(Platzierungsding, outputline.length)
+                Vergleich = message.guild.members.cache.get(DieID)
+                if (!Vergleich) {console.log("hilfe"); return;}
+                
+              }
+            }
+        }
         if (args[1]) {
             let Zwei = args[1]
             if (args[1].startsWith("<")) {
@@ -27,13 +49,15 @@ module.exports = {
             if (!Vergleich) {
                 return message.channel.send(`${args[1]} ist anscheinend keine gültige Erwähnung bzw. User ID!`)
             }
-        }
+        
         if (Vergleich == mentionedMember) return message.channel.send("Witzig <:Donhahaldtrump:720999258290913401>")
         if (Vergleich.user.bot) {
             return message.channel.send("Bots haben keine Xp!")
         }
-        const Ziel = await Levels.fetch(Vergleich.user.id, message.guild.id, true);
-        if (!Ziel) return message.channel.send(`${Vergleich.user.username} hat noch keinerlei XP auf diesem Server.`);
+        }
+        if (Vergleich) {Ziel = await Levels.fetch(Vergleich.user.id, message.guild.id, true);}
+        if (!Vergleich) {Ziel = await Levels.fetch(DieID, message.guild.id, true)}
+        if (!Ziel) return message.channel.send(`Irgendwer von den Personen scheint keine Xp zu haben oder es ist ein Fehler aufgetreten`);
         Infomationen = ""
         if (((Math.floor((Ziel.xp - target.xp) / 27.5) / 120) > 1)) {
             var string = `${(Math.floor((Ziel.xp - target.xp) / 27.5) / 120)}`;
@@ -67,7 +91,6 @@ module.exports = {
             Infomationen = `Das sind circa ${Stunden} Stunden wenn ${Vergleich.user.username} alle 30 Sekunden etwas schreiben würde.`
         }
         if (target.xp > Ziel.xp) {
-            ÜberholXP = ((Math.round((target.xp - Ziel.xp) * 100) / 100).toLocaleString());
             message.channel.send(`${Vergleich.user.username} braucht ${(Math.round((target.xp - Ziel.xp) * 100) / 100).toLocaleString()} XP um ${mentionedMember.user.username} zu überholen. Das sind ~${(Math.round((Math.floor((target.xp - Ziel.xp)/27.5) * 100) / 100).toLocaleString())} Nachrichten. ${Infomationen}`)
         }
     }

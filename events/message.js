@@ -25,6 +25,18 @@ module.exports = {
         if (message.author.bot) return;
         const Zeit = Date.now()
         if (message.channel.type == "dm") return message.channel.send(`Es sind schon ${Zeit} millisekunden, also circa ${Math.floor(Zeit/60000)} Minuten oder ${Math.floor(Zeit/3600000)} Stunden oder ${Math.floor(Zeit/86400000)} Tage oder ${Math.floor(Zeit/39420000000)} Jahre seit dem 01.01.1970 00:00:00 UTC vergangen... und trotzdem gibt es Leute die denken dass man nen Bot doch DMen soll? Hier haste nen rickroll. <:dogUpset_HundFrustriert:787994935911645204> https://tenor.com/view/dance-moves-dancing-singer-groovy-gif-17029825`);
+        
+        if (message.content.length > 14) {
+            if (message.content.toUpperCase() == message.content) {
+                if (message.content.toLowerCase() !== message.content) {
+                  const Dingsbums = message.content
+                  const upperCaseWords = Dingsbums.replace(/(\b[A-Z][A-Z]+|\b[A-Z]\b)/g, "")
+                  if (upperCaseWords.length < 0.5 * message.content.length) {
+                    //message.reply("Schrei nicht so rum")
+                  }
+                }
+            }
+        }
 
         var stats = {};
         if (fs.existsSync("stats.json")) {
@@ -40,31 +52,12 @@ module.exports = {
         if (message.author.id in guildStats === false) {
             guildStats[message.author.id] = {
                 last_message: 0,
-                debug: false
             };
         }
 
         const userStats = guildStats[message.author.id];
 
-        var settings = {};
-        if (fs.existsSync("settings.json")) {
-            settings = jsonfile.readFileSync("settings.json");
-        }
-        console.log(message.author.id in settings)
-        if (message.author.id in settings == false) {
-            settings[message.author.id] = {
-                Hintergrund: null,
-                name: `${message.author.username}#${message.author.discriminator}`
-            };
-        } 
-        jsonfile.writeFileSync("settings.json", settings)
-        const Einstellungen = settings[message.author.id]
-        if (Einstellungen.name !== `${message.author.username}#${message.author.discriminator}`) {
-            Einstellungen.name = `${message.author.username}#${message.author.discriminator}`
-            jsonfile.writeFileSync("settings.json", settings)
-        }
-
-        let botchannel = ['741720422285836441', "741695385042550868", "741699889322262691", "888040968610250782"];
+        let botchannel = ['741720422285836441', "741695385042550868", "741699889322262691", "888040968610250782","823622423919591465","741694739732103219"];
         let Botchannel = false;
         for (var b in botchannel) {
             if (message.channel.id.toLowerCase().includes(botchannel[b].toLowerCase())) Botchannel = true;
@@ -77,7 +70,6 @@ module.exports = {
 
                     jsonfile.writeFileSync("stats.json", stats);
                     const randomXP = Math.floor(Math.random() * 25) + 15;
-                    if (userStats.debug == true) {
                         if (message.guild.id == "741694739279118446") Debugchannel = await client.channels.fetch("888040968610250782")
                         else Debugchannel = await client.channels.fetch("746716303267594290")
                         if (message.content.length < 100) {Inhalt = `${message.content}`; Punkte = ""}
@@ -88,15 +80,12 @@ module.exports = {
                             Inhalt = `${trimmedString}`
                             Punkte = "..."
                         }
-                        Debugchannel.send(`${message.author.username} bekam ${randomXP} XP für die Nachricht: ` + "`" + Inhalt + "`"+ Punkte);
-                    }
-                    if (userStats.debug == "dm") {
-                        message.author.send(`Du bekamst ${randomXP} XP für die Nachricht`)
-                    }
-                    if (!userStats.debug) {
-                        userStats.debug = false
-                        jsonfile.writeFileSync("stats.json", stats);
-                    }
+                  if (message.channel.id !== "741698744734449834") {
+                        Debugchannel.send(`${message.author.username} bekam ${randomXP} XP im Channel <#${message.channel.id}> für die Nachricht: ` + "`" + Inhalt + "`"+ Punkte);
+                  }
+                  else {
+                    Debugchannel.send(`${message.author.username} bekam ${randomXP} XP im serverteam channel`)
+                  }
 
                     const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXP);
                     const user = await Levels.fetch(message.author.id, message.guild.id);
@@ -257,7 +246,7 @@ module.exports = {
             }
         }
         if (message.content.includes("<@!869212452955516978>")) message.reply("ping mich nicht <:dani_ping:880941566351536128>")
-
+      if (message.content.includes("<@869212452955516978>")) message.reply("ping mich nicht <:dani_ping:880941566351536128>")
         if (!message.content.startsWith(client.prefix)) return;
 
         const args = message.content.slice(client.prefix.length).trim().split(/ +/);
@@ -268,8 +257,8 @@ module.exports = {
         if (commandName == "lb") {
             commandName = "leaderboard"
         }
+      
         if (!client.commands.has(commandName)) return;
-
         const command = client.commands.get(commandName);
 
         command.execute(message, args, client);

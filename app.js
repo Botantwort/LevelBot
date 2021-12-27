@@ -6,6 +6,7 @@ const fs = require('fs');
 const keepAlive = require('./server.js');
 require("dotenv").config();
 
+
 Levels.setURL(`mongodb+srv://Botantwort:${process.env.PASSWORT}@bot.p4gse.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
 client.prefix = "°";
 client.commands = new Discord.Collection();
@@ -26,12 +27,6 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args, client));
 	}
 }
-
-client.on('ready', async () => {
-    console.log(`${client.user.tag} has sich in Discord eingelogged.`)
-
-});
-
 
 mongoose.init();
 keepAlive();
