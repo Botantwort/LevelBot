@@ -35,6 +35,8 @@ module.exports = {
                 const Platzierungsding = Platzierung.toString().length + 1
                 var DieID = outputline.substring(Platzierungsding, outputline.length)
                 Vergleich = message.guild.members.cache.get(DieID)
+                if (!Vergleich) {console.log("hilfe"); return;}
+                
               }
             }
         }
@@ -47,13 +49,15 @@ module.exports = {
             if (!Vergleich) {
                 return message.channel.send(`${args[1]} ist anscheinend keine gültige Erwähnung bzw. User ID!`)
             }
-        }
+        
         if (Vergleich == mentionedMember) return message.channel.send("Witzig <:Donhahaldtrump:720999258290913401>")
         if (Vergleich.user.bot) {
             return message.channel.send("Bots haben keine Xp!")
         }
-        const Ziel = await Levels.fetch(Vergleich.user.id, message.guild.id, true);
-        if (!Ziel) return message.channel.send(`${Vergleich.user.username} hat noch keinerlei XP auf diesem Server.`);
+        }
+        if (Vergleich) {Ziel = await Levels.fetch(Vergleich.user.id, message.guild.id, true);}
+        if (!Vergleich) {Ziel = await Levels.fetch(DieID, message.guild.id, true)}
+        if (!Ziel) return message.channel.send(`Irgendwer von den Personen scheint keine Xp zu haben oder es ist ein Fehler aufgetreten`);
         Infomationen = ""
         if (((Math.floor((Ziel.xp - target.xp) / 27.5) / 120) > 1)) {
             var string = `${(Math.floor((Ziel.xp - target.xp) / 27.5) / 120)}`;

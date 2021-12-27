@@ -32,7 +32,7 @@ module.exports = {
                   const Dingsbums = message.content
                   const upperCaseWords = Dingsbums.replace(/(\b[A-Z][A-Z]+|\b[A-Z]\b)/g, "")
                   if (upperCaseWords.length < 0.5 * message.content.length) {
-                    message.reply("Schrei nicht so rum")
+                    //message.reply("Schrei nicht so rum")
                   }
                 }
             }
