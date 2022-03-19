@@ -3,10 +3,16 @@ const Discord = require("discord.js");
 const random = require("random")
 const fs = require("fs");
 const jsonfile = require("jsonfile");
+var os = require('os');
+
 
 module.exports = {
     name: 'message',
-    async execute(message, client) {
+    async execute(message, client) {          
+      if (message.content =='ok') {
+      //message.delete()
+      return
+    } 
         let nice = ['69'];
         let foundInText = false;
         for (var i in nice) {
@@ -22,10 +28,13 @@ module.exports = {
                 message.channel.send("69, nice. <:smirktus:859170348263276545>")
             }
         }
+ 
+
         if (message.author.bot) return;
         const Zeit = Date.now()
         if (message.channel.type == "dm") return message.channel.send(`Es sind schon ${Zeit} millisekunden, also circa ${Math.floor(Zeit/60000)} Minuten oder ${Math.floor(Zeit/3600000)} Stunden oder ${Math.floor(Zeit/86400000)} Tage oder ${Math.floor(Zeit/39420000000)} Jahre seit dem 01.01.1970 00:00:00 UTC vergangen... und trotzdem gibt es Leute die denken dass man nen Bot doch DMen soll? Hier haste nen rickroll. <:dogUpset_HundFrustriert:787994935911645204> https://tenor.com/view/dance-moves-dancing-singer-groovy-gif-17029825`);
-        
+       if(message.member.id == "294720427148705792" || "417367976921268225") if (message.content.includes("187"||"185")) {//message.delete()
+       }
         if (message.content.length > 14) {
             if (message.content.toUpperCase() == message.content) {
                 if (message.content.toLowerCase() !== message.content) {
@@ -245,9 +254,14 @@ module.exports = {
                 }
             }
         }
-        if (message.content.includes("<@!869212452955516978>")) message.reply("ping mich nicht <:dani_ping:880941566351536128>")
-      if (message.content.includes("<@869212452955516978>")) message.reply("ping mich nicht <:dani_ping:880941566351536128>")
-        if (!message.content.startsWith(client.prefix)) return;
+      if (message.content.includes("<@869212452955516978>")) { 
+        if (message.member.id !== "772906895844573236"){
+          message.reply("ping mich nicht <:dani_ping:880941566351536128>")
+        } else{
+          message.reply ("Ja was los Mutti?🥺")
+             }
+      }
+      if (!message.content.startsWith(client.prefix)) return;
 
         const args = message.content.slice(client.prefix.length).trim().split(/ +/);
         commandName = args.shift().toLowerCase();

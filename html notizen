@@ -1,0 +1,33 @@
+
+<javescript>
+const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, Nummer, true); // We grab top XY users with most xp in the current server.
+
+				if (rawLeaderboard.length < 1) return message.reply("Keiner ist bisher im  Leaderboard.");
+
+				const leaderboard = await Levels.computeLeaderboard(client, rawLeaderboard, true); // We process the leaderboard.
+
+				const lb = leaderboard.map(e => `${e.position}. ${e.username}  XP: ${e.xp.toLocaleString()}`); // We map the outputs.
+            </javescript>
+<!DOCTYPE html>>
+<html>
+    <head>
+        <title>HTML Tabelle</title>
+        <script>
+            var data = lb.join("\n\n")
+
+            var html = "<table><tr>"
+            //for (var i=0; i=<data.length; i++) {
+                html += `<td>${data[i]}</td>`
+            //}
+        </script>
+    </head>
+    <body>
+        <div id="container"></div>
+    </body>
+</html>
+
+
+var mytable = "<table><tr>";
+    for (var CELL of ARRAY) {  mytable += "<td>" + CELL + "</td>"; }
+    mytable += "</tr></table>";
+    document.getElementById("ID").innerHTML = mytable;
