@@ -43,12 +43,18 @@ module.exports = {
                             Informationen2 = ""
                         }
                         Anzahllevel = target.level;
-                        AnzahlXP = target.xp - Levels.xpFor(target.level);
-                        RequiredXP = Levels.xpFor(target.level + 1) - Levels.xpFor(target.level);
-                        Platzierung = target.position;
-                        PlatzierungName = "RANK";
+                         AnzahlXP = target.xp - Levels.xpFor(target.level)
+                       
+                       RequiredXP = Levels.xpFor(target.level + 1) - Levels.xpFor(target.level)
+
+                        Platzierung = target.position
+
+                        PlatzierungName = "RANK"
+
                         if (mentionedMember.user.bot) {
-                            img = "https://rondea.com/wp-content/uploads/2021/02/1250347-you-can-now-rickroll-people-in-4k.jpg";
+
+                            img = "https://rondea.com/wp-content/uploads/2021/02/1250347-you-can-now-rickroll-people-in-4k.jpg"
+
                             Anzahllevel = 420;
                             AnzahlXP = 13;
                             RequiredXP = 37;
@@ -57,7 +63,7 @@ module.exports = {
                             Profilbild = "https://cdn.discordapp.com/attachments/819909032432107581/880224877049688064/unknown.png";
                             Informationen = "";
                             Informationen2 = ""
-                        } // Der Bot
+                        }// Der Bot
                         const rank = new canvacord.Rank()
                             .setAvatar(Profilbild)
                             .setBackground("IMAGE", img)

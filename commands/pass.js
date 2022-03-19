@@ -11,7 +11,7 @@ module.exports = {
         if (mentionedMember.user.bot) {
             return message.channel.send("Bots haben keine Xp!")
         }
-      const target = await Levels.fetch(mentionedMember.user.id, message.guild.id, true);
+        const target = await Levels.fetch(mentionedMember.user.id, message.guild.id, true);
         if (!target) return message.channel.send(`${mentionedMember.user.username} hat noch keinerlei XP auf diesem Server.`);
         Vergleich = message.member
         if (mentionedMember == message.member) {
@@ -20,6 +20,7 @@ module.exports = {
       				const leaderboard = await Levels.computeLeaderboard(client, rawLeaderboard, true);
               const lb = leaderboard.map(e => `${e.position};${e.userID}`);
               let Platzierung = target.position - 1
+              if (target.position == 1) {Platzierung = 2}
               var outputline = '';
               for (let i=0;i<lb.length;i++) {
               var line = lb[i];
@@ -34,9 +35,7 @@ module.exports = {
               else {
                 const Platzierungsding = Platzierung.toString().length + 1
                 var DieID = outputline.substring(Platzierungsding, outputline.length)
-                Vergleich = message.guild.members.cache.get(DieID)
-                if (!Vergleich) {console.log("hilfe"); return;}
-                
+                Vergleich = message.guild.members.cache.get(DieID)         
               }
             }
         }
@@ -55,8 +54,17 @@ module.exports = {
             return message.channel.send("Bots haben keine Xp!")
         }
         }
-        if (Vergleich) {Ziel = await Levels.fetch(Vergleich.user.id, message.guild.id, true);}
-        if (!Vergleich) {Ziel = await Levels.fetch(DieID, message.guild.id, true)}
+        VergleichName = ""
+        if (Vergleich) {
+          Ziel = await Levels.fetch(Vergleich.user.id, message.guild.id, true);
+          VergleichName = "`" + Vergleich.user.username + "`" 
+          }
+        if (!args[1]) {
+          if (!Vergleich) {
+          Ziel = await Levels.fetch(DieID, message.guild.id, true)
+          VergleichName = "*Person die den Server verlassen hat*"
+        }
+        }
         if (!Ziel) return message.channel.send(`Irgendwer von den Personen scheint keine Xp zu haben oder es ist ein Fehler aufgetreten`);
         Infomationen = ""
         if (((Math.floor((Ziel.xp - target.xp) / 27.5) / 120) > 1)) {
@@ -71,11 +79,15 @@ module.exports = {
                 length = 2;
                 Stunden = string.substring(0, length)
             }
-            Infomationen = `Das sind circa ${Stunden} Stunden wenn ${mentionedMember.user.username} alle 30 Sekunden etwas schreiben würde.`
+            if (Stunden.endsWith(".")) {
+              length = 1;
+              Stunden = string.substring(0, length)
+            }
+           if (Stunden > 1) {Infomationen = `Das sind circa ${Stunden} Stunden wenn ` + "`" + `${mentionedMember.user.username}` + "`" + ` alle 30 Sekunden etwas schreiben würde.`}
         }
         if (Ziel.xp > target.xp) {
-            message.channel.send(`${mentionedMember.user.username} braucht ${(Math.round((Ziel.xp - target.xp) * 100) / 100).toLocaleString()} XP um ${Vergleich.user.username} zu überholen. Das sind ~${(Math.round((Math.floor((Ziel.xp - target.xp)/27.5) * 100) / 100).toLocaleString())} Nachrichten. ${Infomationen}`)
-        }
+            message.channel.send("`" + `${mentionedMember.user.username}` + "`" + ` braucht ${(Math.round((Ziel.xp - target.xp) * 100) / 100).toLocaleString()} XP um ${VergleichName} zu überholen. Das sind ~${(Math.ceil((Math.floor((Ziel.xp - target.xp)/27.5) * 100) / 100).toLocaleString())} Nachrichten. ${Infomationen}`)
+  return      } 
         if (((Math.floor((target.xp - Ziel.xp) / 27.5) / 120) > 1)) {
             var string = `${(Math.floor((target.xp - Ziel.xp) / 27.5) / 120)}`;
             var length = 3;
@@ -88,10 +100,15 @@ module.exports = {
                 length = 2;
                 Stunden = string.substring(0, length)
             }
-            Infomationen = `Das sind circa ${Stunden} Stunden wenn ${Vergleich.user.username} alle 30 Sekunden etwas schreiben würde.`
+            if (Stunden.endsWith(".")) {
+              length = 1;
+              Stunden = string.substring(0, length)
+            }
+            if (Stunden > 1) {Infomationen = `Das sind circa ${Stunden} Stunden wenn ${VergleichName} alle 30 Sekunden etwas schreiben würde.`}
         }
         if (target.xp > Ziel.xp) {
-            message.channel.send(`${Vergleich.user.username} braucht ${(Math.round((target.xp - Ziel.xp) * 100) / 100).toLocaleString()} XP um ${mentionedMember.user.username} zu überholen. Das sind ~${(Math.round((Math.floor((target.xp - Ziel.xp)/27.5) * 100) / 100).toLocaleString())} Nachrichten. ${Infomationen}`)
+            message.channel.send(`${VergleichName} braucht ${(Math.round((target.xp - Ziel.xp) * 100) / 100).toLocaleString()} XP um ` + "`" + `${mentionedMember.user.username}` + "`" + ` zu überholen. Das sind ~${(Math.round((Math.floor((target.xp - Ziel.xp)/27.5) * 100) / 100).toLocaleString())} Nachrichten. ${Infomationen}`)
         }
     }
+                                                     
 }
