@@ -1,2 +1,6 @@
 .env
 stats.json
+node_modules
+package-lock.json
+settings.json
+server.json
