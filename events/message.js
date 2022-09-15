@@ -13,19 +13,24 @@ module.exports = {
       //message.delete()
       return
     } 
+      if (message.content == "Dieser Command kann teilweise mehrere Minuten dauern, manche Leute scheinen das ja immer wieder zu vergessen :), nutzt bitte keine anderen Commands bis es fertig ist. Diese Nachricht wird sich bald selber löschen.") {
+        if (message.author.bot) {
+            message.delete({ timeout:10000 })
+        }
+     }
         let nice = ['69'];
         let foundInText = false;
         for (var i in nice) {
             if (message.content.toLowerCase().includes(nice[i].toLowerCase())) foundInText = true;
         }
-        let NichtNice = ['https://', '<:', ':smirktus:', "<!@", "<@&", "<#", "<@", "<a:"]
+        let NichtNice = ['https://', '<:', ':smirktus:', "<!@", "<@&", "<#", "<@", "<a:", "😏"]
         let gefunden = false;
         for (var i in NichtNice) {
             if (message.content.toLowerCase().includes(NichtNice[i].toLowerCase())) gefunden = true;
         }
         if (!gefunden) {
             if (foundInText) {
-                message.channel.send("69, nice. <:smirktus:859170348263276545>")
+                message.channel.send("69, nice. 😏")
             }
         }
  
@@ -72,6 +77,7 @@ module.exports = {
             if (message.channel.id.toLowerCase().includes(botchannel[b].toLowerCase())) Botchannel = true;
         }
         if (!Botchannel) {
+          if (message.content.length > 10){
             if (!message.content.startsWith(client.prefix)) {
                 if (Date.now() - userStats.last_message > 30000) {
                     userStats.last_message = Date.now();
@@ -253,6 +259,7 @@ module.exports = {
                     }
                 }
             }
+        }
         }
       if (message.content.includes("<@869212452955516978>")) { 
         if (message.member.id !== "772906895844573236"){

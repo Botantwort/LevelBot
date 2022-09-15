@@ -16,6 +16,7 @@ module.exports = {
         Vergleich = message.member
         if (mentionedMember == message.member) {
             if (!args[1]) {
+               message.channel.send('Dieser Command kann teilweise mehrere Minuten dauern, manche Leute scheinen das ja immer wieder zu vergessen :), nutzt bitte keine anderen Commands bis es fertig ist. Diese Nachricht wird sich bald selber löschen.') 
               const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, -1, true);
       				const leaderboard = await Levels.computeLeaderboard(client, rawLeaderboard, true);
               const lb = leaderboard.map(e => `${e.position};${e.userID}`);
